@@ -39,3 +39,9 @@ $('.like').on('click', function(event){ // like onclick
        }
    });
 });
+
+$('#menu-toggle').click(function (e) {
+   e.preventDefault();
+   $('.wrapper').toggleClass('menuDisplayed');
+
+});

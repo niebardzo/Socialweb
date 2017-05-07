@@ -5,6 +5,7 @@ use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Like;
+use App\Category;
 
 
 class PostController extends Controller
@@ -12,16 +13,20 @@ class PostController extends Controller
     public function getDashboard()
     {
         $posts = Post::orderBy('created_at', 'desc')->get();
-        return view('dashboard', ['posts' =>$posts]);
+        $categories=Category::all();
+        return view('dashboard', ['posts' =>$posts, 'categories'=>$categories]);
 
     }
     public function postCreatePost(Request $request)
     {
         $this->validate($request, [
-            'body'=>'required|max:1000'
+            'body'=>'required|max:1000',
+            'category_id'=>'required|integer'
         ]);
         $post= new Post();
+
         $post-> body= $request['body'];
+        $post->category_id = $request['category_id'];
         $message='There was an error';
         if($request->user()->posts()->save($post)){
             $message = 'Post successfully created!';

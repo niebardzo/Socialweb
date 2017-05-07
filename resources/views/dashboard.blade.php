@@ -3,12 +3,38 @@
 
 @section('content')
     @include('includes.message-block')
+<div id="wrapper" >
+
+    <div id="sidebar-wrapper" >
+        <ul class="sidebar-nav">
+            <li><a href="#">Main Page</a></li>
+            @foreach($categories as $category)
+                <li><a href="{{ route('showPosts', ['$category_id'=> $category->id]) }}">{{ $category->name }}</a></li>
+            @endforeach
+
+        </ul>
+
+    </div>
+    <div id="page-content-wrapper">
     <section class="row new-post">
+        <div class="col-lg-12">
+            <h2><a href="#" class="glyphicon glyphicon-menu-hamburger" style="text-decoration: none;" id="menu-toggle"></a></h2>
+        </div>
         <div class="col-md-6 col-md-offset-3">
             <header><h3>What do you have to say?</h3></header>
             <form action="{{ route('post.create') }}" method="post">
                 <div class="form-group">
                    <textarea class="form-control" name="body" id="new-post" rows="5" placeholder="Your Post"></textarea>
+                    <br />
+
+                    <label for="category_id">Category</label>
+                    <select class="form-control" id="category_id" name="category_id">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
                 <button class="btn btn-primary" type="submit">Create Post</button>
                 <input type="hidden" value="{{ Session::token() }}" name="_token">
@@ -22,7 +48,7 @@
             <article class="post" data-postid="{{ $post->id }}">
                 <p>{{ $post->body }}</p>
                 <div class="info">
-                    Posted by {{ $post->user->first_name }} on {{ $post->created_at }}
+                    Posted by {{ $post->user->first_name }} on {{ $post->created_at }} in {{ $post->category->name }}
                 </div>
                 <div class="interaction">
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like' }}</a>
@@ -65,4 +91,6 @@
         var urlEdit= '{{ route('edit') }}';
         var urlLike= '{{ route('like') }}';
     </script>
+    </div>
+</div>
     @endsection

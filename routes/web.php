@@ -17,6 +17,7 @@ Route::group(['middleware' => ['web']],function(){
         return view('welcome');
     })->name('home');
 
+
    Route::get('dashboard', [
        'uses'=>'PostController@getDashboard',
        'as'=>'dashboard',
@@ -68,5 +69,16 @@ Route::group(['middleware' => ['web']],function(){
     Route::post('/like', [
        'uses' =>'PostController@postLikePost',
         'as' => 'like'
+    ]);
+
+    //Categories
+
+    Route::resource('categories', 'CategoryController',[
+        'except'=>['create']
+    ]);
+
+    Route::get('dashboard/category/{category_id}', [
+        'uses'=>'CategoryController@showAllPosts',
+        'as'=>'showPosts'
     ]);
 });
