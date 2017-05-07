@@ -60,17 +60,6 @@
 
 }
 
-#sidebar-visible
-{
-    z-index: 1;
-    position: absolute;
-    height: 100%;
-    float: left;
-    width: 200px;
-    border: 1px solid #f2dede;
-    border-radius: 10px;
-    opacity: 0.9;
-}
 
 #wrapper.menuDisplayed #page-content-wrapper{
     padding-left: 250px;

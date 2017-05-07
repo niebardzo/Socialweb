@@ -8,8 +8,8 @@
     <div id="sidebar-wrapper" >
         <ul class="sidebar-nav">
             <li><a href="#">Main Page</a></li>
-            @foreach($categories as $category)
-                <li><a href="{{ route('showPosts', ['$category_id'=> $category->id]) }}">{{ $category->name }}</a></li>
+            @foreach($categories as $categori)
+                <li><a href="{{ route('showPosts', ['$category_id'=> $categori->id]) }}">{{ $categori->name }}</a></li>
             @endforeach
 
         </ul>
