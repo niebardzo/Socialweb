@@ -94,4 +94,14 @@ class UserController extends Controller{
         return view('ranking', ['users' => $users, 'posts'=> $posts ]);
     }
 
+    public function getHome()
+    {
+        if(Auth::user())
+        {
+            return redirect()->route('dashboard');
+        }
+        else
+            return view('welcome');
+    }
+
 }
