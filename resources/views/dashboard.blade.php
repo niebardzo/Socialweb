@@ -48,6 +48,8 @@
             <article class="post" data-postid="{{ $post->id }}">
                 <p>{{ $post->body }}</p>
                 <div class="info">
+                    <div style="color:green;">{{ $post->likes }} People like it.</div>
+                    <div style="color:red;">{{ $post->dislikes }} People dislike it</div>
                     Posted by {{ $post->user->first_name }} on {{ $post->created_at }} in {{ $post->category->name }}
                 </div>
                 <div class="interaction">

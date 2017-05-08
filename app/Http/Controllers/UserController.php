@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Response;
+use App\Post;
 
 class UserController extends Controller{
 
@@ -79,4 +80,18 @@ class UserController extends Controller{
         $file=Storage::disk('local')->get($filename);
         return new Response($file, 200);
     }
+    public function showRanking()
+    {
+        //$users = User::orderBy('likes', 'desc')->get();
+
+
+
+      $users=User::all();
+      $posts=Post::orderBy('likes', 'desc')->get();
+       // $posts = Post::orderBy('likes', 'asc')->get();
+    // $likes= Post::select('likes')->groupBy('likes')->orderBy(DB::raw('max(likes)'), 'desc')->get();
+
+        return view('ranking', ['users' => $users, 'posts'=> $posts ]);
+    }
+
 }

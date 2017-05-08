@@ -27,6 +27,8 @@ class PostController extends Controller
 
         $post-> body= $request['body'];
         $post->category_id = $request['category_id'];
+        $post->likes=0;
+        $post->dislikes=0;
         $message='There was an error';
         if($request->user()->posts()->save($post)){
             $message = 'Post successfully created!';
@@ -73,8 +75,16 @@ class PostController extends Controller
         if($like){
             $already_like = $like->like;
             $update = true;
+
             if($already_like==$is_like){
                 $like->delete();
+                //
+                if($already_like==0)
+                    $post->dislikes=$post->dislikes-1;
+                if($already_like==1)
+                    $post->likes=$post->likes-1;
+                $post->save();
+                //
                 return null;
             }
         } else{
@@ -83,12 +93,36 @@ class PostController extends Controller
         $like->like=$is_like;
         $like->user_id = $user->id;
         $like->post_id=$post->id;
+        $post->save();
+
         if($update){
             $like->update();
+            if($is_like==0){
+                $post->likes=$post->likes-1;
+                $post->dislikes=$post->dislikes+1;
+            }
+
+            if($is_like==1){
+                $post->dislikes=$post->dislikes-1;
+                $post->likes=$post->likes+1;
+            }
+            $post->save();
         }
         else{
+
             $like->save();
+
+            //
+            if($is_like==0)
+                $post->dislikes=$post->dislikes+1;
+            if($is_like==1)
+                $post->likes=$post->likes+1;
+            //
+            $post->save();
+
         }
+
+
         return null;
     }
 }

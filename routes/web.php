@@ -71,6 +71,10 @@ Route::group(['middleware' => ['web']],function(){
         'as' => 'like'
     ]);
 
+    Route::get('/ranking',[
+        'uses'=>'UserController@showRanking',
+        'as'=>'ranking'
+    ]);
     //Categories
 
     Route::resource('categories', 'CategoryController',[
