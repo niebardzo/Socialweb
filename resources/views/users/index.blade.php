@@ -18,11 +18,13 @@
                 </thead>
                 <tbody>
                 @foreach( $users as $user)
+                    @if($user->email !="admin@admin.com")
                 <tr>
                     <th>{{ $user->first_name }}</th>
                     <td>{{ $user->email }}</td>
                     <td><a href="{{ route('user.delete', ['user_id'=> $user->id]) }}" class="glyphicon glyphicon-trash"></a></td>
                 </tr>
+                @endif
                     @endforeach
                 </tbody>
             </table>
