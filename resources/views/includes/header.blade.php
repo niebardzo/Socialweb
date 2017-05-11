@@ -19,8 +19,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 @if(Auth::user())
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ route('ranking') }}">Ranking</a></li>
+
+
+                    @if(Auth::user()->email=="admin@admin.com")
                     <li><a href="{{ route('categories.index') }}">Categories</a></li>
+                    <li><a href="{{ route('users') }}">Users</a></li>
+                    @endif
+                    <li><a href="{{ route('ranking') }}">Ranking</a></li>
                     <li><a href="{{ route('account') }}">Account</a></li>
                     <li><a href="{{ route('logout') }}">Logout</a></li>
                 </ul>

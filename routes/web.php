@@ -55,6 +55,11 @@ Route::group(['middleware' => ['web']],function(){
         'as'=> 'post.delete',
         'middleware'=>'auth'
     ]);
+    Route::get('/admin-delete-post/{post_id}', [
+        'uses' => 'PostController@adminDeletePost',
+        'as'=> 'post.delete.admin',
+        'middleware'=>'auth'
+    ]);
     Route::post('/edit', [
         'uses'=>'PostController@postEditPost',
         'as' => 'edit',
@@ -62,7 +67,8 @@ Route::group(['middleware' => ['web']],function(){
     ]);
     Route::get('/account',[
        'uses' =>'UserController@getAccount',
-        'as' => 'account'
+        'as' => 'account',
+        'middleware'=>'auth'
     ]);
     Route::post('/updateaccount',[
        'uses'=>'UserController@postSaveAccount',
@@ -77,14 +83,34 @@ Route::group(['middleware' => ['web']],function(){
         'as' => 'like'
     ]);
 
+    //Users
+
     Route::get('/ranking',[
         'uses'=>'UserController@showRanking',
-        'as'=>'ranking'
+        'as'=>'ranking',
+        'middleware'=>'auth'
     ]);
+    Route::get('/users',[
+        'uses'=>'UserController@showUsers',
+        'as'=>'users',
+        'middleware'=>'auth'
+    ]);
+
+    Route::get('/delete-user/{user_id}', [
+        'uses' => 'UserController@getDeleteUser',
+        'as'=> 'user.delete',
+        'middleware'=>'auth'
+    ]);
+
     //Categories
 
     Route::resource('categories', 'CategoryController',[
         'except'=>['create']
+    ]);
+    Route::get('/delete-category/{category_id}', [
+        'uses' => 'CategoryController@getDeleteCategory',
+        'as'=> 'category.delete',
+        'middleware'=>'auth'
     ]);
 
     Route::get('dashboard/category/{category_id}', [

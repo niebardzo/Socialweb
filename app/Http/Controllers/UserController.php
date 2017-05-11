@@ -94,6 +94,30 @@ class UserController extends Controller{
         return view('ranking', ['users' => $users, 'posts'=> $posts ]);
     }
 
+
+    public function showUsers()
+    {
+        if(Auth::user()->email != "admin@admin.com"){
+            return redirect()->back();
+        }
+        else {
+            $users = User::all();
+            return view('users.index', ['users' => $users]);
+        }
+    }
+
+    public function getDeleteUser($user_id)
+    {
+        $user= User::where('id', $user_id)->first();
+
+        if(Auth::user()->email != "admin@admin.com"){
+            return redirect()->back();
+        }
+        $user->delete();
+        $posts= Post::where('user_id', $user_id)->delete();
+        return redirect()->route('users')->with(['message'=>'Successfully deleted user.']);
+    }
+
     public function getHome()
     {
         if(Auth::user())

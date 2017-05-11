@@ -4,6 +4,7 @@
     {{ $category->name }}
         @endsection
 @section('content')
+    @include('includes.message-block')
 <div id="wrapper">
     <div id="sidebar-wrapper" >
         <ul class="sidebar-nav">
@@ -36,6 +37,9 @@
                             @if(Auth::user()==$post->user)
                                 <a href="#" class="edit">Edit</a>
                                 <a href="{{ route('post.delete', ['post_id'=> $post->id]) }}">Delete</a>
+                            @endif
+                            @if(Auth::user()->email=="admin@admin.com")
+                                <a href="{{ route('post.delete.admin', ['post_id'=> $post->id]) }}">Hard Delete</a>
                             @endif
                         </div>
                     </article>

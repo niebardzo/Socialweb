@@ -34,6 +34,7 @@ $('.like').on('click', function(event){ // like onclick
        event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like': event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
        if(isLike){
            event.target.nextElementSibling.innerText ='Dislike';
+
        } else {
            event.target.previousElementSibling.innerText = 'Like';
        }
@@ -44,4 +45,8 @@ $('#menu-toggle').click(function (e) {
    e.preventDefault();
    $('#wrapper').toggleClass('menuDisplayed');
 
+});
+
+$('.glyphicon .glyphicon-menu-hamburger').on('click', function(event) { // category onclick
+    event.preventDefault();
 });

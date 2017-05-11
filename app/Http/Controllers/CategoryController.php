@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use Session;
 use App\Post;
+use Illuminate\Support\Facades\Auth;
 
 
 class CategoryController extends Controller
@@ -22,8 +23,14 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::all();
-        return view('categories.index')->withCategories($categories);
+        if(Auth::user()->email!="admin@admin.com")
+        {
+            return redirect()->route('dashboard');
+        }
+        else {
+            $categories = Category::all();
+            return view('categories.index')->withCategories($categories);
+        }
     }
 
     /**
@@ -107,5 +114,16 @@ class CategoryController extends Controller
         $categories=Category::all();
         return view('categories.category', ['posts' =>$posts, 'category'=>$category, 'categories'=>$categories]);
 
+    }
+    public function getDeleteCategory($category_id)
+    {
+        $category= Category::where('id', $category_id)->first();
+
+        if(Auth::user()->email != "admin@admin.com"){
+            return redirect()->back();
+        }
+        $category->delete();
+        $posts= Post::where('category_id', $category_id)->delete();
+        return redirect()->route('categories.index')->with(['message'=>'Successfully deleted category.']);
     }
 }

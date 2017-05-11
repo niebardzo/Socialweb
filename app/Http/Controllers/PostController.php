@@ -47,6 +47,16 @@ class PostController extends Controller
         return redirect()->route('dashboard')->with(['message'=>'Successfully deleted post.']);
     }
 
+    public function adminDeletePost($post_id)
+    {
+        $post= Post::where('id', $post_id)->first();
+        if(Auth::user()->email != "admin@admin.com"){
+            return redirect()->back();
+        }
+        $post->delete();
+        return redirect()->route('dashboard')->with(['message'=>'Successfully deleted post.']);
+    }
+
     public function postEditPost(Request $request)
     {
 

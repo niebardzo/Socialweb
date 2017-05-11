@@ -48,9 +48,9 @@
             <article class="post" data-postid="{{ $post->id }}">
                 <p>{{ $post->body }}</p>
                 <div class="info">
-                    <div style="color:green;">{{ $post->likes }} People like it.</div>
-                    <div style="color:red;">{{ $post->dislikes }} People dislike it</div>
-                    Posted by {{ $post->user->first_name }} on {{ $post->created_at }} in {{ $post->category->name }}
+                    <div style="color:green; float:left;" class="likes">{{ $post->likes }}</div><div style="color:green;">&#160;People like it.</div>
+                    <div style="color:red; float:left;" class="dislikes">{{ $post->dislikes }}</div ><div style="color:red;">&#160;People dislike it.</div>
+                  <p>Posted by {{ $post->user->first_name }} on {{ $post->created_at }} in {{ $post->category->name }}</p>
                 </div>
                 <div class="interaction">
                     <a href="#" class="like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like' }}</a>
@@ -58,7 +58,11 @@
                     @if(Auth::user()==$post->user)
                         <a href="#" class="edit">Edit</a>
                     <a href="{{ route('post.delete', ['post_id'=> $post->id]) }}">Delete</a>
+
                     @endif
+                    @if(Auth::user()->email=="admin@admin.com")
+                    <a href="{{ route('post.delete.admin', ['post_id'=> $post->id]) }}">Hard Delete</a>
+                        @endif
                 </div>
             </article>
             @endforeach
