@@ -117,4 +117,12 @@ Route::group(['middleware' => ['web']],function(){
         'uses'=>'CategoryController@showAllPosts',
         'as'=>'showPosts'
     ]);
+
+
+    //Calendar
+
+
+    Auth::routes();
+    Route::resource('gcalendar', 'gCalendarController');
+    Route::get('oauth', ['as' => 'oauthCallback', 'uses' => 'gCalendarController@oauth']);
 });
