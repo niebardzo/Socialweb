@@ -6,6 +6,7 @@ use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventDateTime;
 use Illuminate\Http\Request;
+use DateTime;
 class gCalendarController extends Controller
 {
     protected $client;
@@ -31,7 +32,32 @@ class gCalendarController extends Controller
             $service = new Google_Service_Calendar($this->client);
             $calendarId = 'primary';
             $results = $service->events->listEvents($calendarId);
-            return $results->getItems();
+
+            //fullcalendar data friendly
+
+            $events=$results->getItems();
+
+            $data=[];
+            foreach($events as $event){
+
+                $start_date= new DateTime($event->start['dateTime']);
+                $start=$start_date->format(DateTime::ISO8601);
+                $end_date= new DateTime($event->end['dateTime']);
+                $end=$end_date->format(DateTime::ISO8601);
+
+
+
+                $subArr=[
+                    'id'=>$event->id,
+                    'title'=>$event->getSummary(),
+                    'start'=>$start,
+                    'end'=>$end
+                ];
+                array_push($data,$subArr);
+            }
+
+            return $data;
+
         } else {
             return redirect()->route('oauthCallback');
         }
