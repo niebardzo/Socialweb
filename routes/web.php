@@ -122,7 +122,9 @@ Route::group(['middleware' => ['web']],function(){
     //Calendar
 
 
-    Auth::routes();
-    Route::resource('gcalendar', 'gCalendarController');
-    Route::get('oauth', ['as' => 'oauthCallback', 'uses' => 'gCalendarController@oauth']);
+
 });
+
+Auth::routes();
+Route::resource('cal', 'gCalendarController');
+Route::get('oauth', ['as' => 'oauthCallback', 'uses' => 'gCalendarController@oauth']);
