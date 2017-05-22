@@ -64,6 +64,9 @@
                     <a href="{{ route('post.delete.admin', ['post_id'=> $post->id]) }}">Hard Delete</a>
                         @endif
                 </div>
+                @if(Auth::user()!=$post->user)
+                    <a href="{{ route('reserv') }}" class="btn btn-success" role="button">Make reservation</a>
+                @endif
             </article>
             @endforeach
         </div>

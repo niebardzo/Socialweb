@@ -184,7 +184,7 @@ class gCalendarController extends Controller
             $event->setEnd($end);
             $updatedEvent = $service->events->update('primary', $event->getId(), $event);
             if (!$updatedEvent) {
-                return response()->json(['status' => 'error', 'message' => 'Something went wrong']);
+              return response()->json(['status' => 'error', 'message' => 'Something went wrong']);
             }
             return response()->json(['status' => 'success', 'data' => $updatedEvent]);
         } else {
@@ -208,5 +208,12 @@ class gCalendarController extends Controller
         } else {
             return redirect()->route('oauthCallback');
         }
+    }
+
+    public function getCalendar()
+    {
+        gCalendarController::index();
+        return view('calendar.index');
+
     }
 }
