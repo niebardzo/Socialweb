@@ -117,4 +117,24 @@ Route::group(['middleware' => ['web']],function(){
         'uses'=>'CategoryController@showAllPosts',
         'as'=>'showPosts'
     ]);
+
+
+    //Calendar
+
+    Route::resource('cal', 'gCalendarController');
+    Route::get('oauth', ['as' => 'oauthCallback', 'uses' => 'gCalendarController@oauth']);
+    Route::get('/calendar', [
+        'uses'=>'gCalendarController@getCalendar',
+        'as'=>'calendar',
+        'middleware'=>'auth'
+        ]);
+    Route::get('/reservation', [
+        'uses'=>'gCalendarController@create',
+        'as'=>'reserv',
+        'middleware'=>'auth'
+    ]);
+
+
+
 });
+

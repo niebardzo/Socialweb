@@ -48,7 +48,7 @@
             <article class="post" data-postid="{{ $post->id }}">
                 <p>{{ $post->body }}</p>
                 <div class="info">
-                    <div style="color:green; float:left;" class="likes">{{ $post->likes }}</div><div style="color:green;">&#160;People like it.</div>
+                    <div style="color:green; float:left;" class="likes" >{{ $post->likes }}</div><div style="color:green;">&#160;People like it.</div>
                     <div style="color:red; float:left;" class="dislikes">{{ $post->dislikes }}</div ><div style="color:red;">&#160;People dislike it.</div>
                   <p>Posted by {{ $post->user->first_name }} on {{ $post->created_at }} in {{ $post->category->name }}</p>
                 </div>
@@ -64,6 +64,9 @@
                     <a href="{{ route('post.delete.admin', ['post_id'=> $post->id]) }}">Hard Delete</a>
                         @endif
                 </div>
+                @if(Auth::user()!=$post->user)
+                    <a href="{{ route('reserv') }}" class="btn btn-success" role="button">Make reservation</a>
+                @endif
             </article>
             @endforeach
         </div>
